@@ -15,6 +15,10 @@
       margin-right: auto;
     }
 
+    p {
+      line-height: 1.25em;
+    }
+
     .gallery {
       display: flex;
       flex-direction: column;
@@ -56,6 +60,42 @@
   img {
     border-radius: 2.5%;
   }
+
+  .gallery img {
+    transition: filter 0.3s ease-in-out;
+  }
+  
+  .gallery img:hover {
+    filter: brightness(70%);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    display: block;
+    margin: auto;
+  }
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+  }
   </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,78 +106,85 @@
 
   <p style="text-align: center;">by Reynaldo R. Isaac Jr.</p>
 
-  <p style="text-align: justify;">This training dataset is designed to enhance the geographical generalization of graffiti image detection models, specifically focusing on the diverse visual landscape of the Philippines.  Graffiti styles, materials, and cultural contexts can vary significantly across different regions, even within a single country.  This dataset aims to capture this variability, enabling models to accurately identify graffiti in a wider range of Philippine locations and ultimately improving their robustness and real-world applicability. To achieve this, the dataset includes images from a variety of locations, including but not limited to:</p>
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <p style="text-align: justify;">This training dataset is designed to enhance the geographical generalization of graffiti image detection models, specifically focusing on the diverse visual landscape of the Philippines.  Graffiti styles, materials, and cultural contexts can vary significantly across different regions, even within a single country.  This dataset aims to capture this variability, enabling models to accurately identify graffiti in a wider range of Philippine locations and ultimately improving their robustness and real-world applicability. To achieve this, the dataset includes images from a variety of locations.</p>
   
-    <h1>Cebu City</h1>
+    <h1>Cebu City (100 images)</h1> 
     <div class="gallery-container">
     <div class="gallery" id="gallery1" data-start="1907" data-end="2006">
       <div class="reload-icon" onclick="reloadGallery('gallery1')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Davao City</h1>
+    <h1>Davao City (103 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery2" data-start="2007" data-end="2109">
       <div class="reload-icon" onclick="reloadGallery('gallery2')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Baguio City</h1>
+    <h1>Baguio City (100 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery3" data-start="2110" data-end="2209">
       <div class="reload-icon" onclick="reloadGallery('gallery3')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Iloilo City</h1>
+    <h1>Iloilo City (107 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery4" data-start="2210" data-end="2316">
       <div class="reload-icon" onclick="reloadGallery('gallery4')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Bacolod City</h1>
+    <h1>Bacolod City (109 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery5" data-start="2317" data-end="2425">
       <div class="reload-icon" onclick="reloadGallery('gallery5')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Zamboanga City</h1>
+    <h1>Zamboanga City (109 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery6" data-start="2426" data-end="2534">
       <div class="reload-icon" onclick="reloadGallery('gallery6')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Cagayan de Oro City</h1>
+    <h1>Cagayan de Oro City (104 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery7" data-start="2535" data-end="2638">
       <div class="reload-icon" onclick="reloadGallery('gallery7')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>General Santos City</h1>
+    <h1>General Santos City (107 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery8" data-start="2639" data-end="2745">
       <div class="reload-icon" onclick="reloadGallery('gallery8')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Angeles City</h1>
+    <h1>Angeles City (113 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery9" data-start="2746" data-end="2858">
       <div class="reload-icon" onclick="reloadGallery('gallery9')">↻</div>
       <div class="row"></div>
     </div></div>
 
-    <h1>Kalookan City</h1>
+    <h1>Kalookan City (112 images)</h1>
     <div class="gallery-container">
     <div class="gallery" id="gallery10" data-start="2859" data-end="2970">
       <div class="reload-icon" onclick="reloadGallery('gallery10')">↻</div>
       <div class="row"></div>
     </div></div>
   
+    <p style="text-align: justify; padding-bottom: 10px">This dataset contains a total of 1,064 images of Filipino graffiti sourced from various cities across the Philippines. By compiling diverse graffiti examples, it aims to enhance the geographical generalization of detection models, allowing for more accurate identification in different urban contexts.</p>
+
     <p style="text-align: justify; padding-bottom: 50px">Each gallery randomly picks 8 images from each region. You may click the reload button to randomize again and see more images from each area.</p>
 
     <script>
@@ -147,40 +194,51 @@
         const numImages = 8;
         const startingNumber = parseInt(gallery.dataset.start);
         const endingNumber = parseInt(gallery.dataset.end);
-    
+  
         const possibleImageNumbers = Array.from({ length: endingNumber - startingNumber + 1 }, (_, i) => startingNumber + i);
-    
+        
         function shuffleArray(array) {
           for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
           }
         }
-    
+  
         shuffleArray(possibleImageNumbers);
         const imageNumbers = possibleImageNumbers.slice(0, numImages);
-    
+  
         imageRow.innerHTML = ""; // Clear previous images
-    
+  
         for (let i = 0; i < imageNumbers.length; i++) {
           const imageNumber = String(imageNumbers[i]).padStart(4, '0');
           const imageUrl = `images/Train Images/train_${imageNumber}.png`;
           const img = document.createElement('img');
           img.src = imageUrl;
           img.alt = `Detection Result ${imageNumbers[i]}`;
+          img.onclick = function () { openModal(imageUrl); };
           imageRow.appendChild(img);
         }
       }
-    
+  
       function reloadGallery(galleryId) {
         createGallery(galleryId);
       }
-    
-      // Initialize all galleries
-      const galleries = document.querySelectorAll('.gallery');
-      galleries.forEach(gallery => {
-        createGallery(gallery.id);
+  
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.gallery').forEach(gallery => {
+          createGallery(gallery.id);
+        });
       });
+    </script>
+
+    <script>
+      function openModal(imageSrc) {
+        document.getElementById("modalImage").src = imageSrc;
+        document.getElementById("imageModal").style.display = "flex";
+      }
+      function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+      }
     </script>
 
 </body>
