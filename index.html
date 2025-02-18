@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Detection Results</title>
+  <title>Filipino-based Graffiti from Google Street-View for Training Dataset</title>
   <style>
     body { /* Apply to the entire page */
       font-family: 'Helvetica', sans-serif;
@@ -15,12 +15,13 @@
       margin-right: auto;
     }
 
-  .gallery { 
-    display: flex;
-    flex-direction: column; 
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative; /* Makes the reload button stay inside */
   }
 
   .row {
@@ -35,6 +36,26 @@
       max-width: calc(25% - 10px); /* Adjust as needed */
       box-sizing: border-box; 
     }
+  
+    .reload-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+  }
+  
+  .reload-icon:hover {
+      background: rgba(200, 200, 200, 0.9);
+  }
+
+  img {
+    border-radius: 2.5%;
+  }
   </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,57 +68,77 @@
 
   <p style="text-align: justify;">This training dataset is designed to enhance the geographical generalization of graffiti image detection models, specifically focusing on the diverse visual landscape of the Philippines.  Graffiti styles, materials, and cultural contexts can vary significantly across different regions, even within a single country.  This dataset aims to capture this variability, enabling models to accurately identify graffiti in a wider range of Philippine locations and ultimately improving their robustness and real-world applicability. To achieve this, the dataset includes images from a variety of locations, including but not limited to:</p>
   
-  <h1>Cebu City</h1>
+    <h1>Cebu City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery1" data-start="1907" data-end="2006">
+      <div class="reload-icon" onclick="reloadGallery('gallery1')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Davao City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery2" data-start="2007" data-end="2109">
+      <div class="reload-icon" onclick="reloadGallery('gallery2')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Baguio City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery3" data-start="2110" data-end="2209">
+      <div class="reload-icon" onclick="reloadGallery('gallery3')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Iloilo City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery4" data-start="2210" data-end="2316">
+      <div class="reload-icon" onclick="reloadGallery('gallery4')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Bacolod City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery5" data-start="2317" data-end="2425">
+      <div class="reload-icon" onclick="reloadGallery('gallery5')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Zamboanga City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery6" data-start="2426" data-end="2534">
+      <div class="reload-icon" onclick="reloadGallery('gallery6')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Cagayan de Oro City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery7" data-start="2535" data-end="2638">
+      <div class="reload-icon" onclick="reloadGallery('gallery7')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>General Santos City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery8" data-start="2639" data-end="2745">
+      <div class="reload-icon" onclick="reloadGallery('gallery8')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Angeles City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery9" data-start="2746" data-end="2858">
+      <div class="reload-icon" onclick="reloadGallery('gallery9')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
 
     <h1>Kalookan City</h1>
+    <div class="gallery-container">
     <div class="gallery" id="gallery10" data-start="2859" data-end="2970">
+      <div class="reload-icon" onclick="reloadGallery('gallery10')">↻</div>
       <div class="row"></div>
-    </div>
+    </div></div>
   
-    <p style="text-align: justify; padding-bottom: 50px">Each gallery randomly picks 8 images from each region. You may reload the page to randomize again and see more images from each area.</p>
+    <p style="text-align: justify; padding-bottom: 50px">Each gallery randomly picks 8 images from each region. You may click the reload button to randomize again and see more images from each area.</p>
 
     <script>
       function createGallery(galleryId) {
@@ -106,35 +147,40 @@
         const numImages = 8;
         const startingNumber = parseInt(gallery.dataset.start);
         const endingNumber = parseInt(gallery.dataset.end);
-
+    
         const possibleImageNumbers = Array.from({ length: endingNumber - startingNumber + 1 }, (_, i) => startingNumber + i);
-
+    
         function shuffleArray(array) {
           for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
           }
         }
+    
         shuffleArray(possibleImageNumbers);
-
         const imageNumbers = possibleImageNumbers.slice(0, numImages);
-
+    
+        imageRow.innerHTML = ""; // Clear previous images
+    
         for (let i = 0; i < imageNumbers.length; i++) {
           const imageNumber = String(imageNumbers[i]).padStart(4, '0');
-          const imageUrl = `images/Train Images/train_${imageNumber}.png`; // Make sure path is correct
+          const imageUrl = `images/Train Images/train_${imageNumber}.png`;
           const img = document.createElement('img');
           img.src = imageUrl;
           img.alt = `Detection Result ${imageNumbers[i]}`;
           imageRow.appendChild(img);
         }
       }
-
-      // Call the function for each gallery
+    
+      function reloadGallery(galleryId) {
+        createGallery(galleryId);
+      }
+    
+      // Initialize all galleries
       const galleries = document.querySelectorAll('.gallery');
       galleries.forEach(gallery => {
         createGallery(gallery.id);
       });
-
     </script>
 
 </body>
