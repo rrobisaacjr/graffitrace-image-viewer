@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Detection Results</title>
+  <style>
+  .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+  .column {
+      flex: 25%; /* This will create 4 equal columns */
+      max-width: 25%;
+      padding: 0 4px;
+    }
+
+  .column img {
+      margin-top: 8px;
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 800px) {
+    .column {
+        flex: 50%; /* 2 columns on medium screens */
+        max-width: 50%;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+    .column {
+        flex: 100%; /* 1 column on small screens */
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Detection Results</h1>
+
+  <div id="image-gallery"> </div>
+
+  <script>
+    const imageGallery = document.getElementById('image-gallery');
+    const numImages = 500;
+    const startingNumber = 1907;
+    const imagesPerRow = 4; // Number of images per row
+
+    for (let i = 0; i < numImages; i++) {
+      // Create a new row every 'imagesPerRow' images
+      if (i % imagesPerRow === 0) {
+        var row = document.createElement('div');
+        row.classList.add('row');
+        imageGallery.appendChild(row);
+      }
+
+      const imageNumber = String(startingNumber + i).padStart(4, '0');
+      const imageUrl = `images/Train Images/train_${imageNumber}.png`;
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.alt = `Detection Result ${startingNumber + i}`;
+      img.style.maxWidth = '300px';
+      img.style.margin = '5px';
+
+      // Append the image to the current row
+      row.appendChild(img); 
+    }
+  </script>
+
+</body>
+</html>
