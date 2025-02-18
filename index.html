@@ -3,70 +3,139 @@
 <head>
   <title>My Detection Results</title>
   <style>
+    body { /* Apply to the entire page */
+      font-family: 'Helvetica', sans-serif;
+      padding-top: 50px;
+    }
+    
+    h1, p { /* Or apply to specific elements */
+      font-family: 'Helvetica', sans-serif;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+  .gallery { 
+    display: flex;
+    flex-direction: column; 
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .row {
       display: flex;
-      flex-wrap: wrap;
-      padding: 0 4px;
-    }
-
-  .column {
-      flex: 25%; /* This will create 4 equal columns */
-      max-width: 25%;
-      padding: 0 4px;
-    }
-
-  .column img {
-      margin-top: 8px;
-      vertical-align: middle;
+      flex-wrap: wrap; /* Allow wrapping within the row */
       width: 100%;
     }
 
-    @media screen and (max-width: 800px) {
-    .column {
-        flex: 50%; /* 2 columns on medium screens */
-        max-width: 50%;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-    .column {
-        flex: 100%; /* 1 column on small screens */
-        max-width: 100%;
-      }
+  .row img {
+      flex: 1 0 0px; 
+      margin: 5px;
+      max-width: calc(25% - 10px); /* Adjust as needed */
+      box-sizing: border-box; 
     }
   </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Detection Results</h1>
+  <h1 style="text-align: center;">Filipino-based Graffiti from Google Street-View for Training Dataset</h1>
 
-  <div id="image-gallery"> </div>
+  <p style="text-align: center;">by Reynaldo R. Isaac Jr.</p>
 
-  <script>
-    const imageGallery = document.getElementById('image-gallery');
-    const numImages = 500;
-    const startingNumber = 1907;
-    const imagesPerRow = 4; // Number of images per row
+  <p style="text-align: justify;">This training dataset is designed to enhance the geographical generalization of graffiti image detection models, specifically focusing on the diverse visual landscape of the Philippines.  Graffiti styles, materials, and cultural contexts can vary significantly across different regions, even within a single country.  This dataset aims to capture this variability, enabling models to accurately identify graffiti in a wider range of Philippine locations and ultimately improving their robustness and real-world applicability. To achieve this, the dataset includes images from a variety of locations, including but not limited to:</p>
+  
+  <h1>Cebu City</h1>
+    <div class="gallery" id="gallery1" data-start="1907" data-end="2006">
+      <div class="row"></div>
+    </div>
 
-    for (let i = 0; i < numImages; i++) {
-      // Create a new row every 'imagesPerRow' images
-      if (i % imagesPerRow === 0) {
-        var row = document.createElement('div');
-        row.classList.add('row');
-        imageGallery.appendChild(row);
+    <h1>Davao City</h1>
+    <div class="gallery" id="gallery2" data-start="2007" data-end="2109">
+      <div class="row"></div>
+    </div>
+
+    <h1>Baguio City</h1>
+    <div class="gallery" id="gallery3" data-start="2110" data-end="2209">
+      <div class="row"></div>
+    </div>
+
+    <h1>Iloilo City</h1>
+    <div class="gallery" id="gallery4" data-start="2210" data-end="2316">
+      <div class="row"></div>
+    </div>
+
+    <h1>Bacolod City</h1>
+    <div class="gallery" id="gallery5" data-start="2317" data-end="2425">
+      <div class="row"></div>
+    </div>
+
+    <h1>Zamboanga City</h1>
+    <div class="gallery" id="gallery6" data-start="2426" data-end="2534">
+      <div class="row"></div>
+    </div>
+
+    <h1>Cagayan de Oro City</h1>
+    <div class="gallery" id="gallery7" data-start="2535" data-end="2638">
+      <div class="row"></div>
+    </div>
+
+    <h1>General Santos City</h1>
+    <div class="gallery" id="gallery8" data-start="2639" data-end="2745">
+      <div class="row"></div>
+    </div>
+
+    <h1>Angeles City</h1>
+    <div class="gallery" id="gallery9" data-start="2746" data-end="2858">
+      <div class="row"></div>
+    </div>
+
+    <h1>Kalookan City</h1>
+    <div class="gallery" id="gallery10" data-start="2859" data-end="2970">
+      <div class="row"></div>
+    </div>
+  
+    <p style="text-align: justify; padding-bottom: 50px">Each gallery randomly picks 8 images from each region. You may reload the page to randomize again and see more images from each area.</p>
+
+    <script>
+      function createGallery(galleryId) {
+        const gallery = document.getElementById(galleryId);
+        const imageRow = gallery.querySelector('.row');
+        const numImages = 8;
+        const startingNumber = parseInt(gallery.dataset.start);
+        const endingNumber = parseInt(gallery.dataset.end);
+
+        const possibleImageNumbers = Array.from({ length: endingNumber - startingNumber + 1 }, (_, i) => startingNumber + i);
+
+        function shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+        shuffleArray(possibleImageNumbers);
+
+        const imageNumbers = possibleImageNumbers.slice(0, numImages);
+
+        for (let i = 0; i < imageNumbers.length; i++) {
+          const imageNumber = String(imageNumbers[i]).padStart(4, '0');
+          const imageUrl = `images/Train Images/train_${imageNumber}.png`; // Make sure path is correct
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = `Detection Result ${imageNumbers[i]}`;
+          imageRow.appendChild(img);
+        }
       }
 
-      const imageNumber = String(startingNumber + i).padStart(4, '0');
-      const imageUrl = `images/Train Images/train_${imageNumber}.png`;
-      const img = document.createElement('img');
-      img.src = imageUrl;
-      img.alt = `Detection Result ${startingNumber + i}`;
-      img.style.maxWidth = '300px';
-      img.style.margin = '5px';
+      // Call the function for each gallery
+      const galleries = document.querySelectorAll('.gallery');
+      galleries.forEach(gallery => {
+        createGallery(gallery.id);
+      });
 
-      // Append the image to the current row
-      row.appendChild(img); 
-    }
-  </script>
+    </script>
 
 </body>
 </html>
